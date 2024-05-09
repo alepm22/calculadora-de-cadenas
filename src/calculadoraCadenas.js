@@ -1,6 +1,6 @@
-function sumaTotal(cadena) {
+function calcularCadena(cadena) {
   const CERO=0
-  let acumulacionSuma=CERO
+  let sumaTotal=CERO
   const longitudCadena=cadena.length
   const SEPARADORUSUARIO=cadena[3]
   let cadenaEstaVacia=longitudCadena!=0
@@ -20,18 +20,17 @@ function sumaTotal(cadena) {
           }
           if((caracterEsUnNumeroSeparadoPorComa || caracterEsElUltimoNumero || caracterEsUnNumeroSeparadoPorGuion || caracterEsUnNumeroSeparadoPorCaracterEspecificadoPorUsuario))
             {
-              console.log(caracter)
-              console.log(parseInt(cadenaNumeros.join('')))
-              if(parseInt(cadenaNumeros.join(''))<=1000)
+              let numeroASumarEsMenorIgual1000=parseInt(cadenaNumeros.join(''))<=1000
+              if(numeroASumarEsMenorIgual1000)
                 {
-                  acumulacionSuma=acumulacionSuma+parseInt(cadenaNumeros.join(''))
+                  sumaTotal=sumaTotal+parseInt(cadenaNumeros.join(''))
 
                 }
               cadenaNumeros=[]
             }
         }
     }
-  return acumulacionSuma
+  return sumaTotal
 }
 
-export default sumaTotal;
+export default calcularCadena;
