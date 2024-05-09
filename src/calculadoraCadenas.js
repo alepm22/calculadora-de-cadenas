@@ -6,11 +6,11 @@ function calcularCadena(cadena) {
     {
       for (let i=0;i<longitudCadena;i++)
         {
-          if(!isNaN(cadena[i]) && cadena[i+1]=="," && i!=longitudCadena-1)
-            {
-              sumaTotal=sumaTotal+parseInt(cadena[i])
-            }
-          if(i==longitudCadena-1)
+          let caracter=cadena[i]
+          let siguienteCaracter=cadena[i+1]
+          let caracterEsUnNumeroSeparadoPorComa=!isNaN(caracter) && siguienteCaracter=="," && i!=longitudCadena-1
+          let caracterEsElUltimoNumero=i==longitudCadena-1
+          if(caracterEsUnNumeroSeparadoPorComa || caracterEsElUltimoNumero)
             {
               sumaTotal=sumaTotal+parseInt(cadena[i])
             }
