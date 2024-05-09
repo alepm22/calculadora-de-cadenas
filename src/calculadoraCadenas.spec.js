@@ -10,4 +10,7 @@ describe("Calculadora de cadenas", () => {
   it("Debería devolver 5 porque la cadena contiene dos elementos", () => {
     expect(calcularCadena("3,2")).toEqual(5);
   });
+  it("Deberia retornar 10 porque la cadena contiene tiene tres elementos", () => {
+    expect(calcularCadena("3,2,5")).toEqual(10);
+  });
 });

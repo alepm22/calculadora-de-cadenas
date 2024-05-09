@@ -1,14 +1,22 @@
 function calcularCadena(cadena) {
   const CERO=0
+  let sumaTotal=CERO
   const longitudCadena=cadena.length
-  if (longitudCadena==1)
+  if (longitudCadena!=0)
     {
-      return parseInt(cadena[0]);
+      for (let i=0;i<longitudCadena;i++)
+        {
+          if(!isNaN(cadena[i]) && cadena[i+1]=="," && i!=longitudCadena-1)
+            {
+              sumaTotal=sumaTotal+parseInt(cadena[i])
+            }
+          if(i==longitudCadena-1)
+            {
+              sumaTotal=sumaTotal+parseInt(cadena[i])
+            }
+        }
     }
-  if(longitudCadena==3){
-    return parseInt(cadena[0])+parseInt(cadena[2])
-  }
-  return CERO
+  return sumaTotal
 }
 
 export default calcularCadena;
