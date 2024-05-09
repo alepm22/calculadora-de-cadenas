@@ -16,4 +16,7 @@ describe("Calculadora de cadenas", () => {
   it("Deberia retornar 17 porque la cadena contiene cuatro elementos", () => {
     expect(calcularCadena("3-2,5-7")).toEqual(17);
   });
+  it("Deberia retornar 26 tomando en cuenta el separador del usuario", () => {
+    expect(calcularCadena("//[;] 3-2,5-7;9")).toEqual(26);
+  });
 });
