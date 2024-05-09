@@ -1,25 +1,26 @@
 function calcularCadena(cadena) {
   const CERO=0
-  let sumaTotal=CERO
-  const longitudCadena=cadena.length
+  let longitudCadena=CERO
+  const sumaTotal=cadena.length
   const SEPARADORUSUARIO=cadena[3]
-  if (longitudCadena!=0)
+  let cadenaEstaVacia=sumaTotal!=0
+  if (cadenaEstaVacia)
     {
-      for (let iteradorCadena=0;iteradorCadena<longitudCadena;iteradorCadena++)
+      for (let iteradorCadena=0;iteradorCadena<sumaTotal;iteradorCadena++)
         {
           let caracter=cadena[iteradorCadena]
           let siguienteCaracter=cadena[iteradorCadena+1]
-          let caracterEsUnNumeroSeparadoPorComa=!isNaN(caracter) && siguienteCaracter=="," && iteradorCadena!=longitudCadena-1
-          let caracterEsElUltimoNumero=iteradorCadena==longitudCadena-1
-          let caracterEsUnNumeroSeparadoPorGuion=!isNaN(caracter) && siguienteCaracter=="-" && iteradorCadena!=longitudCadena-1
-          let caracterEsUnNumeroSeparadoPorCaracterEspecificadoPorUsuario=!isNaN(caracter) && siguienteCaracter==SEPARADORUSUARIO && iteradorCadena!=longitudCadena-1
+          let caracterEsUnNumeroSeparadoPorComa=!isNaN(caracter) && siguienteCaracter=="," && iteradorCadena!=sumaTotal-1
+          let caracterEsElUltimoNumero=iteradorCadena==sumaTotal-1
+          let caracterEsUnNumeroSeparadoPorGuion=!isNaN(caracter) && siguienteCaracter=="-" && iteradorCadena!=sumaTotal-1
+          let caracterEsUnNumeroSeparadoPorCaracterEspecificadoPorUsuario=!isNaN(caracter) && siguienteCaracter==SEPARADORUSUARIO && iteradorCadena!=sumaTotal-1
           if(caracterEsUnNumeroSeparadoPorComa || caracterEsElUltimoNumero || caracterEsUnNumeroSeparadoPorGuion || caracterEsUnNumeroSeparadoPorCaracterEspecificadoPorUsuario)
             {
-              sumaTotal=sumaTotal+parseInt(caracter)
+              longitudCadena=longitudCadena+parseInt(caracter)
             }
         }
     }
-  return sumaTotal
+  return longitudCadena
 }
 
 export default calcularCadena;
