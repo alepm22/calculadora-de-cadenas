@@ -19,4 +19,7 @@ describe("Calculadora de cadenas", () => {
   it("Deberia retornar 26 tomando en cuenta el separador del usuario", () => {
     expect(calcularCadena("//[;] 3-2,5-7;9")).toEqual(26);
   });
+  it("Deberia retornar 26 porque se ignoran los numeros mayores a 1000", () => {
+    expect(calcularCadena("//[;] 3-2,1001,5-1001-7;9")).toEqual(26);
+  });
 });
