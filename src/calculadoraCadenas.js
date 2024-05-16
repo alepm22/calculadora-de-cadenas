@@ -8,8 +8,7 @@ function extraerSeparadoresPersonalizados(cadena) {
   return separadores;
 }
 
-function esNumeroMenorOIgualAMil(cadenaNumeros) {
-  const numero = parseInt(cadenaNumeros.join(""));
+function esNumeroValido(numero) {
   return numero <= 1000;
 }
 
@@ -27,41 +26,39 @@ function esUnSeparador(caracterActual, siguienteCaracter, cadena, indice, separa
   );
 }
 
-function sumarNumerosEnCadena(cadena) {
-  const INICIO = 0;
-  let sumaTotal = INICIO;
+function obtenerNumerosDesdeCadena(cadena, separadores) {
+  let numeros = [];
+  let numerosTemporales = [];
   const longitudCadena = cadena.length;
 
-  if (longitudCadena === 0) return sumaTotal;
+  for (let i = 0; i < longitudCadena; i++) {
+    const caracterActual = cadena[i];
+    const siguienteCaracter = cadena[i + 1];
 
-  let numerosTemporales = [];
-  const separadores = extraerSeparadoresPersonalizados(cadena);
-  const separadorUsuario = separadores.length > 0 ? separadores[0] : cadena[3];
-  let cadenaNoEstaVacia = longitudCadena !== 0;
+    if (!isNaN(caracterActual)) {
+      numerosTemporales.push(caracterActual);
+    }
 
-  if (cadenaNoEstaVacia) {
-    for (let i = 0; i < longitudCadena; i++) {
-      let caracterActual = cadena[i];
-      let siguienteCaracter = cadena[i + 1];
-
-      if (!isNaN(caracterActual)) {
-        numerosTemporales.push(caracterActual);
+    if (esUnSeparador(caracterActual, siguienteCaracter, cadena, i, separadores)) {
+      const numero = parseInt(numerosTemporales.join(''));
+      if (esNumeroValido(numero)) {
+        numeros.push(numero);
       }
-
-      if (esUnSeparador(caracterActual, siguienteCaracter, cadena, i, separadores) &&
-          esNumeroMenorOIgualAMil(numerosTemporales)) {
-        sumaTotal += parseInt(numerosTemporales.join(''));
-        numerosTemporales = [];
-      }
-
-      if (esUnSeparador(caracterActual, siguienteCaracter, cadena, i, separadores) &&
-          !esNumeroMenorOIgualAMil(numerosTemporales)) {
-        numerosTemporales = [];
-      }
+      numerosTemporales = [];
     }
   }
 
-  return sumaTotal;
+  return numeros;
+}
+
+function sumarNumerosEnCadena(cadena) {
+  const longitudCadena = cadena.length;
+  if (longitudCadena === 0) return 0;
+
+  const separadores = extraerSeparadoresPersonalizados(cadena);
+  const numeros = obtenerNumerosDesdeCadena(cadena, separadores);
+
+  return numeros.reduce((suma, numero) => suma + numero, 0);
 }
 
 export default sumarNumerosEnCadena;
