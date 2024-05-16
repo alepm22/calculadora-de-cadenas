@@ -1,62 +1,62 @@
-function obtenerSeparadoresPersonalizados(cadena) {
-  const regexSeparadores = /\[(.*?)\]/g;
-  let separadoresPersonalizados = [];
-  let resultadoRegex;
-  while ((resultadoRegex = regexSeparadores.exec(cadena)) !== null) {
-    separadoresPersonalizados.push(resultadoRegex[1]);
+function extraerSeparadoresPersonalizados(cadena) {
+  const PATRON_SEPARADORES = /\[(.*?)\]/g;
+  let separadores = [];
+  let coincidencia;
+  while ((coincidencia = PATRON_SEPARADORES.exec(cadena)) !== null) {
+    separadores.push(coincidencia[1]);
   }
-  return separadoresPersonalizados;
+  return separadores;
 }
 
-function esNumeroValido(cadenaNumeros) {
+function esNumeroMenorOIgualAMil(cadenaNumeros) {
   const numero = parseInt(cadenaNumeros.join(""));
   return numero <= 1000;
 }
 
-function esSeparadorValido(caracterActual, siguienteCaracter, cadena, indice, separadoresPersonalizados) {
-  const TAMANIOCADENA = cadena.length;
+function esUnSeparador(caracterActual, siguienteCaracter, cadena, indice, separadores) {
+  const longitudCadena = cadena.length;
   return (
     (!isNaN(caracterActual) &&
       (siguienteCaracter === "," ||
        siguienteCaracter === "-" ||
-       separadoresPersonalizados.some(separador => 
+       separadores.some(separador => 
          cadena.substring(indice + 1, indice + 1 + separador.length) === separador)
       ) &&
-      indice !== TAMANIOCADENA - 1) ||
-    indice === TAMANIOCADENA - 1
+      indice !== longitudCadena - 1) ||
+    indice === longitudCadena - 1
   );
 }
 
-function calcularCadena(cadena) {
-  const CERO = 0;
-  let sumaTotal = CERO;
-  const TAMANIOCADENA = cadena.length;
+function sumarNumerosEnCadena(cadena) {
+  const INICIO = 0;
+  let sumaTotal = INICIO;
+  const longitudCadena = cadena.length;
 
-  if (TAMANIOCADENA === 0) return sumaTotal;
+  if (longitudCadena === 0) return sumaTotal;
 
-  let cadenaNumeros = [];
-  const separadoresPersonalizados = obtenerSeparadoresPersonalizados(cadena);
-  const SEPARADORUSUARIO = separadoresPersonalizados.length > 0 ? separadoresPersonalizados[0] : cadena[3];
-  let cadenaEstaVacia = TAMANIOCADENA !== 0;
+  let numerosTemporales = [];
+  const separadores = extraerSeparadoresPersonalizados(cadena);
+  const separadorUsuario = separadores.length > 0 ? separadores[0] : cadena[3];
+  let cadenaNoEstaVacia = longitudCadena !== 0;
 
-  if (cadenaEstaVacia) {
-    for (let iteradorCadena = 0; iteradorCadena < TAMANIOCADENA; iteradorCadena++) {
-      let caracter = cadena[iteradorCadena];
-      let siguienteCaracter = cadena[iteradorCadena + 1];
+  if (cadenaNoEstaVacia) {
+    for (let i = 0; i < longitudCadena; i++) {
+      let caracterActual = cadena[i];
+      let siguienteCaracter = cadena[i + 1];
 
-      if (!isNaN(caracter)) {
-        cadenaNumeros.push(caracter);
+      if (!isNaN(caracterActual)) {
+        numerosTemporales.push(caracterActual);
       }
 
-      if (esSeparadorValido(caracter, siguienteCaracter, cadena, iteradorCadena, separadoresPersonalizados) &&
-          esNumeroValido(cadenaNumeros)) {
-        sumaTotal += parseInt(cadenaNumeros.join(''));
-        cadenaNumeros = [];
+      if (esUnSeparador(caracterActual, siguienteCaracter, cadena, i, separadores) &&
+          esNumeroMenorOIgualAMil(numerosTemporales)) {
+        sumaTotal += parseInt(numerosTemporales.join(''));
+        numerosTemporales = [];
       }
 
-      if (esSeparadorValido(caracter, siguienteCaracter, cadena, iteradorCadena, separadoresPersonalizados) &&
-          !esNumeroValido(cadenaNumeros)) {
-        cadenaNumeros = [];
+      if (esUnSeparador(caracterActual, siguienteCaracter, cadena, i, separadores) &&
+          !esNumeroMenorOIgualAMil(numerosTemporales)) {
+        numerosTemporales = [];
       }
     }
   }
@@ -64,4 +64,4 @@ function calcularCadena(cadena) {
   return sumaTotal;
 }
 
-export default calcularCadena;
+export default sumarNumerosEnCadena;
